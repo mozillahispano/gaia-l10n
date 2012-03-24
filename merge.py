@@ -20,66 +20,86 @@
   " IN THE SOFTWARE.
   """
 
-# Warning: I suck at writing Python, and this code has be done really quickly.
+# Warning: I suck at writing Python, and this code has be done rather quickly.
 import json
 import os
 import shutil
 import sys
 
-def main():
-  outputdir = '/home/kaze/Documents/mozilla/gaia/apps'
-  baseLocale = 'en-US'
-  supportedApps = os.listdir(baseLocale)
-  supportedLocales = ['ar', 'en-US', 'fr', 'ru', 'zh-TW']
+# Glogal variables! Hard-coded params!
+# That's how you know this is such a great script. :-)
+gSupportedLocales = ['ar', 'en-US', 'fr', 'ru', 'zh-TW']
+gDefaultLocale = 'en-US'
 
-  for app in supportedApps:
+# The expected file structure is as follows:
+# /
+#     [lang]/
+#         [app]/
+#             manifest.json
+#             locale/
+#                 [*].properties
+#     ...
 
-    destDir = os.path.join(outputdir, app)
-    if not os.path.isdir(destDir):
-       os.makedirs(destDir)
+# inject localized name/descriptions into JSON manifests
+def mergeManifests(inputDir, outputDir, application):
+  manifestPath = os.path.join(outputDir, application, 'manifest.json')
+  print(manifestPath)
 
-    # inject localized name/descriptions into JSON manifests
-    destPath = os.path.join(destDir, 'manifest.json')
-    print(destPath)
+  # load JSON manifest
+  dest = open(manifestPath, 'r')
+  data = json.load(dest)
+  data['locales'] = {}
+  data['default_locale'] = gDefaultLocale
+  dest.close()
 
-    # load JSON manifest
-    dest = open(destPath, 'r')
-    data = json.load(dest)
-    data['locales'] = {}
-    data['default_locale'] = 'en-US'
+  # fill the 'locales' property
+  for lang in gSupportedLocales:
+    sourcePath = os.path.join(inputDir, lang, application, 'manifest.properties')
+    source = open(sourcePath, 'r');
+
+    # parse name/description in the properties file -- FIXME:
+    # we expect to find 'name' on the first line, 'description' on the 2nd
+    desc = {}
+    lines = source.readlines()
+    desc['name'] = lines[0].replace('name=', '').replace('\n', '')
+    desc['description'] = lines[1].replace('description=', '').replace('\n', '')
+    data['locales'][lang] = desc
+
+    dest = open(manifestPath, 'wb')
+    dest.write(json.dumps(data, indent = 2, separators=(',', ': ')))
     dest.close()
 
-    # fill the 'locales' property
-    for lang in supportedLocales:
-      sourcePath = os.path.join(lang, app, 'manifest.properties')
-      source = open(sourcePath, 'r');
+# concatenate files in the 'locale' directory (if any)
+def mergeProperties(inputDir, outputDir, application):
+  localeDir = os.path.join(inputDir, gDefaultLocale, application, 'locale')
+  if os.path.isdir(localeDir):
+    for resource in os.listdir(localeDir):
 
-      # parse name/description in the properties file -- FIXME:
-      # we assume to find 'name' on the first line, 'description' on the 2nd
-      desc = {}
-      lines = source.readlines()
-      desc['name'] = lines[0].replace('name=', '').replace('\n', '')
-      desc['description'] = lines[1].replace('description=', '').replace('\n', '')
-      data['locales'][lang] = desc
+      resourcePath = os.path.join(outputDir, application, 'locale', resource)
+      print(resourcePath)
 
-      dest = open(destPath, 'wb')
-      dest.write(json.dumps(data, indent = 2, separators=(',', ': ')))
-      dest.close()
+      dest = open(resourcePath, 'wb')
+      for lang in gSupportedLocales:
+        dest.write('[' + lang + ']\n')
+        sourcePath = os.path.join(inputDir, lang, application, 'locale', resource)
+        shutil.copyfileobj(open(sourcePath, 'rb'), dest)
 
-    # concatenate files in the 'locale' directory (if any)
-    localeDir = os.path.join(baseLocale, app, 'locale')
-    if os.path.isdir(localeDir):
-      #destLocaleDir = os.path.join(destDir, 'locale')
-      #print(destLocaleDir)
-      for resource in os.listdir(localeDir):
-        destPath = os.path.join(destDir, 'locale', resource)
-        print(destPath)
-        #dest = open(os.path.join(destLocaleDir, resource), 'wb')
-        dest = open(destPath, 'wb')
-        for lang in supportedLocales:
-          dest.write('[' + lang + ']\n')
-          sourcePath = os.path.join(lang, app, 'locale', resource)
-          shutil.copyfileobj(open(sourcePath, 'rb'), dest)
+# import l10n data for all Gaia apps
+def main():
+  if not len(sys.argv) == 2:
+    print('Usage: ' + sys.argv[0] + ' [applicationDirectory]')
+    exit()
+
+  inputDir = os.path.realpath(os.path.dirname(sys.argv[0]))
+  outputDir = os.path.realpath(sys.argv[1])
+  print('Importing manifests and properties...')
+  print('  from: ' + inputDir)
+  print('  into: ' + outputDir)
+
+  appDir = os.path.join(inputDir, gDefaultLocale)
+  for application in os.listdir(appDir):
+    mergeManifests(inputDir, outputDir, application)
+    mergeProperties(inputDir, outputDir, application)
 
 # startup
 if __name__ == "__main__":
