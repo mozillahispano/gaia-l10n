@@ -21,7 +21,7 @@
   """
 
 # Warning: I suck at writing Python, and this code has be done rather quickly.
-import json
+import simplejson as json # requires version 2.5.0 or newer
 import os
 import shutil
 import sys
@@ -30,6 +30,21 @@ import sys
 # That's how you know this is such a great script. :-)
 gSupportedLocales = ['ar', 'de', 'en-US', 'fr', 'ru', 'zh-TW']
 gDefaultLocale = 'en-US'
+
+def propertyOrder(key):
+  order = {        \
+    'name'           :  1,  \
+    'description'    :  2,  \
+    'launch_path'    :  3,  \
+    'developer'      :  4,  \
+    'permissions'    :  5,  \
+    'locales'        :  6,  \
+    'default_locale' :  7   \
+  }
+  if key[0] in order:
+    return order[key[0]]
+  else:
+    return key[0] # alphabetic order
 
 # The expected file structure is as follows:
 # /
@@ -66,7 +81,8 @@ def mergeManifests(inputDir, outputDir, application):
     data['locales'][lang] = desc
 
     dest = open(manifestPath, 'wb')
-    dest.write(json.dumps(data, indent = 2, separators=(',', ': ')))
+    dest.write(json.dumps(data, indent = 2, separators=(',', ': '), \
+        item_sort_key = propertyOrder))
     dest.close()
 
 # concatenate files in the 'locale' directory (if any)
