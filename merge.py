@@ -28,7 +28,7 @@ import sys
 
 # Glogal variables! Hard-coded params!
 # That's how you know this is such a great script. :-)
-gSupportedLocales = ['ar', 'en-US', 'fr', 'ru', 'zh-TW']
+gSupportedLocales = ['ar', 'de', 'en-US', 'fr', 'ru', 'zh-TW']
 gDefaultLocale = 'en-US'
 
 # The expected file structure is as follows:
