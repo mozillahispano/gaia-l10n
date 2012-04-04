@@ -26,7 +26,7 @@ import os
 import shutil
 import sys
 
-# Glogal variables! Hard-coded params!
+# Global variables! Hard-coded params!
 # That's how you know this is such a great script. :-)
 gSupportedLocales = ['ar', 'de', 'en-US', 'fr', 'ru', 'zh-TW']
 gDefaultLocale = 'en-US'
