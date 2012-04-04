@@ -32,15 +32,15 @@ gSupportedLocales = ['ar', 'de', 'en-US', 'fr', 'ru', 'zh-TW']
 gDefaultLocale = 'en-US'
 
 def propertyOrder(key):
-  order = [          \
-    'name',          \
-    'description',   \
-    'launch_path',   \
-    'developer',     \
-    'permissions',   \
-    'locales',       \
-    'default_locale' \
-  ]
+  order = (
+    'name',
+    'description',
+    'launch_path',
+    'developer',
+    'permissions',
+    'locales',
+    'default_locale'
+  )
   if key[0] in order:
     return order.index(key[0])
   else:
