@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """ Copyright (c) 2012 Fabien Cazenave, Mozilla.
   "
   " Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -48,8 +48,8 @@ def propertyOrder(key):
 
 # The expected file structure is as follows:
 # /
-#     [lang]/
-#         [app]/
+#     [app]/
+#         [lang]/
 #             manifest.json
 #             locale/
 #                 [*].properties
