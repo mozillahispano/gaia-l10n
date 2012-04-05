@@ -69,7 +69,7 @@ def mergeManifests(inputDir, outputDir, application):
 
   # fill the 'locales' property
   for lang in gSupportedLocales:
-    sourcePath = os.path.join(inputDir, lang, application, 'manifest.properties')
+    sourcePath = os.path.join(inputDir, application, lang, 'manifest.properties')
     source = open(sourcePath, 'r');
 
     # parse name/description in the properties file -- FIXME:
@@ -87,7 +87,7 @@ def mergeManifests(inputDir, outputDir, application):
 
 # concatenate files in the 'locale' directory (if any)
 def mergeProperties(inputDir, outputDir, application):
-  localeDir = os.path.join(inputDir, gDefaultLocale, application, 'locale')
+  localeDir = os.path.join(inputDir, application, gDefaultLocale, 'locale')
   if os.path.isdir(localeDir):
     for resource in os.listdir(localeDir):
 
@@ -97,7 +97,7 @@ def mergeProperties(inputDir, outputDir, application):
       dest = open(resourcePath, 'wb')
       for lang in gSupportedLocales:
         dest.write('[' + lang + ']\n')
-        sourcePath = os.path.join(inputDir, lang, application, 'locale', resource)
+        sourcePath = os.path.join(inputDir, application, lang, 'locale', resource)
         shutil.copyfileobj(open(sourcePath, 'rb'), dest)
 
 # import l10n data for all Gaia apps
@@ -107,13 +107,13 @@ def main():
     exit()
 
   inputDir = os.path.realpath(os.path.dirname(sys.argv[0]))
+  inputDir = os.path.join(inputDir, 'apps');
   outputDir = os.path.realpath(sys.argv[1])
   print('Importing manifests and properties...')
   print('  from: ' + inputDir)
   print('  into: ' + outputDir)
 
-  appDir = os.path.join(inputDir, gDefaultLocale)
-  for application in os.listdir(appDir):
+  for application in os.listdir(inputDir):
     mergeManifests(inputDir, outputDir, application)
     mergeProperties(inputDir, outputDir, application)
 
