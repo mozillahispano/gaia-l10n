@@ -21,7 +21,8 @@
   """
 
 # Warning: I suck at writing Python, and this code has be done rather quickly.
-import simplejson as json # requires version 2.5.0 or newer
+# Tested with Python 2.7.2 on Ubuntu 11.10.
+import simplejson as json # requires simplejson v2.5.0 or newer
 import os
 import shutil
 import sys
