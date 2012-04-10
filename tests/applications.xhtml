@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8" />
+    <title> gaia-l10n test page </title>
+    <script type="application/javascript" src="http://gaiamobile.org/webapi.js"></script>
+    <link rel="resource" type="application/l10n" href="_/clock/locale/clock.properties" />
+    <link rel="resource" type="application/l10n" href="_/dialer/locale/dialer.properties" />
+    <link rel="resource" type="application/l10n" href="_/gallery/locale/gallery.properties" />
+    <link rel="resource" type="application/l10n" href="_/homescreen/locale/homescreen.properties" />
+    <link rel="resource" type="application/l10n" href="_/sms/locale/sms.properties" />
+    <link rel="resource" type="application/l10n" href="_/video/locale/video.properties" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+
+    <div id="clock">
+      <h2> clock.properties </h2>
+      <p data-l10n-id="reset" />
+      <p data-l10n-id="start" />
+      <p data-l10n-id="stop" />
+      <p data-l10n-id="cancel" />
+    </div>
+
+    <div id="dialer">
+      <h2> dialer.properties </h2>
+      <p data-l10n-id="call" />
+      <p data-l10n-id="email" />
+      <p data-l10n-id="phone" />
+      <p data-l10n-id="firstName" />
+      <p data-l10n-id="lastName" />
+      <button data-l10n-id="edit" />
+      <button data-l10n-id="delete" />
+      <input type="button" data-l10n-id="done" />
+      <p data-l10n-id="mute" />
+      <p data-l10n-id="keypad" />
+      <p data-l10n-id="speaker" />
+      <p data-l10n-id="hold" />
+      <p data-l10n-id="answer" />
+      <p data-l10n-id="end" />
+    </div>
+
+    <div id="gallery">
+      <h2> gallery.properties </h2>
+      <p data-l10n-id="pictures" />
+    </div>
+
+    <div id="homescreen">
+      <h2> homescreen.properties </h2>
+      <p data-l10n-id="noSimCard" />
+      <p data-l10n-id="connecting" />
+      <p data-l10n-id="roaming"        data-l10n-args='{ "operator": "Telefonica" }' />
+      <p data-l10n-id="unreadMessages" data-l10n-args='{ "n": 5 }' />
+      <p data-l10n-id="missedCalls"    data-l10n-args='{ "n": 8 }' />
+      <p data-l10n-id="loading" />
+      <!-- sleep menu -->
+      <p data-l10n-id="airplane" />
+      <p data-l10n-id="silent" />
+      <p data-l10n-id="normal" />
+      <p data-l10n-id="restart" />
+      <p data-l10n-id="power" />
+      <!-- permissions -->
+      <p data-l10n-id="install"
+         data-l10n-args='{ "name": "Angry Lizards", "origin": "mozilla.org" }' />
+      <p data-l10n-id="yes" />
+      <p data-l10n-id="no" />
+    </div>
+
+    <div id="sms">
+      <h2> sms.properties </h2>
+      <p data-l10n-id="messages" />
+      <p data-l10n-id="edit" />
+      <p data-l10n-id="send" />
+      <p data-l10n-id="newMessage" />
+    </div>
+
+    <div id="video">
+      <h2> video.properties </h2>
+      <p data-l10n-id="videos" />
+    </div>
+
+  </body>
+</html>
