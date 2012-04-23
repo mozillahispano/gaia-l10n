@@ -29,7 +29,7 @@ import sys
 
 # Global variables! Hard-coded params!
 # That's how you know this is such a great script. :-)
-gSupportedLocales = ['ar', 'de', 'en-US', 'fr', 'ru', 'zh-TW']
+gSupportedLocales = ['ar', 'de', 'en-US', 'es', 'fr', 'ru', 'zh-TW']
 gDefaultLocale = 'en-US'
 
 def propertyOrder(key):
