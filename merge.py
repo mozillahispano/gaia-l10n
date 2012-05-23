@@ -29,7 +29,7 @@ import sys
 
 # Global variables! Hard-coded params!
 # That's how you know this is such a great script. :-)
-gSupportedLocales = ['ar', 'de', 'el', 'en-US', 'es', 'fr', 'it', 'pt-BR', 'ru', 'zh-TW']
+gSupportedLocales = ['ar', 'de', 'el', 'en-US', 'es', 'fr', 'it', 'pt-BR', 'ru', 'tr', 'zh-TW']
 gDefaultLocale = 'en-US'
 
 def propertyOrder(key):
@@ -51,14 +51,14 @@ def propertyOrder(key):
 # /
 #     [app]/
 #         [lang]/
-#             manifest.json
+#             manifest.webapp
 #             locale/
 #                 [*].properties
 #     ...
 
 # inject localized name/descriptions into JSON manifests
 def mergeManifests(inputDir, outputDir, application):
-  manifestPath = os.path.join(outputDir, application, 'manifest.json')
+  manifestPath = os.path.join(outputDir, application, 'manifest.webapp')
   print(manifestPath)
 
   # load JSON manifest
