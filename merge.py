@@ -116,7 +116,7 @@ def main():
 
   for application in os.listdir(inputDir):
     mergeManifests(inputDir, outputDir, application)
-    mergeProperties(inputDir, outputDir, application)
+    #mergeProperties(inputDir, outputDir, application)
 
 # startup
 if __name__ == "__main__":
